@@ -29,7 +29,7 @@ public class ConfigStore {
 		reloadConfig();
 	}
 	
-	public void reloadConfig() {
+	public final void reloadConfig() {
 		// Config operations
 		plugin.saveDefaultConfig();
 		plugin.reloadConfig();
