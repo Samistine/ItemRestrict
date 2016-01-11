@@ -82,40 +82,44 @@ public class ConfigStore {
         // Check null
         if( item == null ) return false;
 
-        // Player checks
-        if (player != null) {
-                // Check world
-                if( !isEnabledWorld( player.getWorld() ) ) return false;
-
-                // Check exclude permission
-                if( player.hasPermission("ItemRestrict.bypass." + getActionTypeString( actionType ) + "." + getConfigString( item ) ) ) return false;
-
-                // Check exclude parent permission
-                if( player.hasPermission("ItemRestrict.bypass." + getActionTypeString( actionType ) + "." + getConfigStringParent( item ) ) ) return false;
-        }
-
         // Check ban list
-        return isBanned(item, actionType);
+        if (isBanned(item, actionType)) {
+            // Player checks
+            if (player != null) {
+                    // Check world
+                    if( !isEnabledWorld( player.getWorld() ) ) return false;
+
+                    // Check exclude permission
+                    if( player.hasPermission("ItemRestrict.bypass." + getActionTypeString( actionType ) + "." + getConfigString( item ) ) ) return false;
+
+                    // Check exclude parent permission
+                    if( player.hasPermission("ItemRestrict.bypass." + getActionTypeString( actionType ) + "." + getConfigStringParent( item ) ) ) return false;
+            }
+            return true;
+        }
+        return false;
     }
 	
     public boolean isBannable(Player player, Block block, ActionType actionType) {
         // Check null
         if( block == null ) return false;
 
-        // Player checks
-        if (player != null) {
-            // Check world
-            if( !isEnabledWorld( player.getWorld() ) ) return false;
-
-            // Check exclude permission
-            if( player.hasPermission("ItemRestrict.bypass." + getActionTypeString( actionType ) + "." + getConfigString( block ) ) ) return false;
-
-            // Check exclude parent permission
-            if( player.hasPermission("ItemRestrict.bypass." + getActionTypeString( actionType ) + "." + getConfigStringParent( block ) ) ) return false;
-        }
-
         // Check ban list
-        return isBanned(block, actionType);
+        if (isBanned(block, actionType)) {
+            // Player checks
+            if (player != null) {
+                // Check world
+                if( !isEnabledWorld( player.getWorld() ) ) return false;
+
+                // Check exclude permission
+                if( player.hasPermission("ItemRestrict.bypass." + getActionTypeString( actionType ) + "." + getConfigString( block ) ) ) return false;
+
+                // Check exclude parent permission
+                if( player.hasPermission("ItemRestrict.bypass." + getActionTypeString( actionType ) + "." + getConfigStringParent( block ) ) ) return false;
+            }
+            return true;
+        }
+        return false;
     }
 	
     public String getLabel(Block block) {
