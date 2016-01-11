@@ -45,22 +45,6 @@ public class ConfigStore {
         ownershipBans = config.getStringList("Bans.Ownership");
         worldBans = config.getStringList("Bans.World");
     }
-	
-    public boolean hasPermission(CommandSender sender, String node, boolean allowConsole) {
-        if (sender instanceof Player) {
-            if (!sender.hasPermission(node)) {
-                sender.sendMessage("Insufficient permissions");
-                return false;
-            }
-        } else {
-            if (!allowConsole) {
-                sender.sendMessage("This is only a player command");
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     public boolean isEnabledWorld(World world) {
         return worldList.contains("All") || worldList.contains(world.getName());
