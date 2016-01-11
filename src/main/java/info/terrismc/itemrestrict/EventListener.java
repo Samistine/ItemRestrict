@@ -229,7 +229,7 @@ public class EventListener implements Listener {
 				// When a player switches item in hand
 				Player player = event.getPlayer();
 				int slotId = event.getNewSlot();
-				ItemStack item = player.getInventory().getItem( slotId );;
+				ItemStack item = player.getInventory().getItem( slotId );
 				
 				// Check ownership bannable and world
 				if( item != null && cStore.isBannable( player, item, ActionType.Ownership ) ) {				
