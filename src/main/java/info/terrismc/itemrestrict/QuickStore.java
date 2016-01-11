@@ -31,26 +31,18 @@ public class QuickStore {
 	if( cStore.getBanListSize( ActionType.World ) == 0 ) return;
         //at this point it should be ok, if it is just reading.
         final BukkitScheduler scheduler = ItemRestrict.server.getScheduler();
-        scheduler.runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                final int yMax = chunk.getWorld().getMaxHeight();
-                Block block;
-                for (int x = 0; x < 16; x++) {
-                    for (int z = 0; z < 16; z++) {
-                        for (int y = 0; y < yMax; y++) {
-                            block = chunk.getBlock(x, y, z);
-                            if (cStore.isBannable(null, block, ActionType.World)) {
-                                final Block clearBlock = block;
+        scheduler.runTaskAsynchronously(plugin, () -> {
+            final int yMax = chunk.getWorld().getMaxHeight();
+            Block block;
+            for (int x = 0; x < 16; x++) {
+                for (int z = 0; z < 16; z++) {
+                    for (int y = 0; y < yMax; y++) {
+                        block = chunk.getBlock(x, y, z);
+                        if (cStore.isBannable(null, block, ActionType.World)) {
+                            final Block clearBlock = block;
 
-                                // Remove block synchronously
-                                scheduler.runTask(plugin, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        clearBlock.setType(Material.AIR);
-                                    }
-                                });
-                            }
+                            // Remove block synchronously
+                            scheduler.runTask(plugin, () -> clearBlock.setType(Material.AIR));
                         }
                     }
                 }
@@ -118,12 +110,6 @@ public class QuickStore {
     public void flashItem(final Player player) {
         final ItemStack item = player.getItemInHand();
         player.setItemInHand(null);
-        plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-            @Override
-            public void run() {
-                player.setItemInHand(item);
-            }
-        }, 1);
-
+        plugin.getServer().getScheduler().runTaskLater(plugin, () -> player.setItemInHand(item), 1);
     }
 }
