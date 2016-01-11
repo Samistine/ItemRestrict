@@ -1,6 +1,7 @@
 package info.terrismc.itemrestrict;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -92,7 +93,7 @@ public class ConfigStore {
 			return worldBans.contains( configString );
 		default:
 			// Should never reach here if all enum cases covered
-			ItemRestrict.logger.warning( "Unknown ActionType detected: " + actionType.toString() );
+			ItemRestrict.logger.log(Level.WARNING, "Unknown ActionType detected: {0}", actionType);
 			return false;
 		}
 	}
@@ -192,7 +193,7 @@ public class ConfigStore {
 			return "World";
 		default:
 			// Should never reach here if all enum cases covered
-			ItemRestrict.logger.warning( "Unknown ActionType detected: " + actionType.toString() );
+			ItemRestrict.logger.log(Level.WARNING, "Unknown ActionType detected: {0}", actionType);
 			return "";
 		}
 	}
@@ -264,7 +265,7 @@ public class ConfigStore {
 			return worldBans.size();
 		}
 		// Should never reach here if all enum cases covered
-		ItemRestrict.logger.warning( "Unknown ActionType detected: " + actionType.toString() );
+		ItemRestrict.logger.log(Level.WARNING, "Unknown ActionType detected: {0}", actionType);
 		return 0;
 	}
 
@@ -304,7 +305,7 @@ public class ConfigStore {
 			break;
 		default:
 			// Should never reach here if all enum cases covered
-			ItemRestrict.logger.warning( "Unknown ActionType detected: " + actionType.toString() );
+			ItemRestrict.logger.log(Level.WARNING, "Unknown ActionType detected: {0}", actionType);
 			return;
 		}
 		plugin.saveConfig();
@@ -347,7 +348,7 @@ public class ConfigStore {
 				break;
 			default:
 				// Should never reach here if all enum cases covered
-				ItemRestrict.logger.warning( "Unknown ActionType detected: " + actionType.toString() );
+				ItemRestrict.logger.log(Level.WARNING, "Unknown ActionType detected: {0}", actionType);
 				return;
 			}
 			plugin.saveConfig();
