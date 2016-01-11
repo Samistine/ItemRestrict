@@ -5,6 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class CommandListener implements CommandExecutor {
+
     private ConfigStore cStore;
 
     public CommandListener(ItemRestrict plugin) {
@@ -13,24 +14,25 @@ public class CommandListener implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
-        if( args.length == 0 )  return false;
-        switch (args[0]) {
-            case "reload":
-                if (args.length == 1) {
-                    cStore.reloadConfig();
-                    sender.sendMessage("ItemRestrict Config Reloaded");
-                    return true;
-                }
-            case "ban":
-                if (args.length == 3) {
-                    cStore.addBan(sender, getActionType(args[1]), args[2]);
-                    return true;
-                }
-            case "unban":
-                if (args.length == 3) {
-                    cStore.removeBan(sender, getActionType(args[1]), args[2]);
-                    return true;
-                }
+        if (args.length != 0) {
+            switch (args[0]) {
+                case "reload":
+                    if (args.length == 1) {
+                        cStore.reloadConfig();
+                        sender.sendMessage("ItemRestrict Config Reloaded");
+                        return true;
+                    }
+                case "ban":
+                    if (args.length == 3) {
+                        cStore.addBan(sender, getActionType(args[1]), args[2]);
+                        return true;
+                    }
+                case "unban":
+                    if (args.length == 3) {
+                        cStore.removeBan(sender, getActionType(args[1]), args[2]);
+                        return true;
+                    }
+            }
         }
         return false;
     }
@@ -48,7 +50,9 @@ public class CommandListener implements CommandExecutor {
                 return ActionType.Ownership;
             case "world":
                 return ActionType.World;
+            default:
+                return null;
         }
-        return null;
     }
+
 }
