@@ -2,6 +2,7 @@ package info.terrismc.itemrestrict;
 
 import java.util.List;
 import java.util.logging.Level;
+import org.bukkit.ChatColor;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -144,11 +145,11 @@ public class ConfigStore {
     public String getLabel(Block block) {
         String label = config.getString("Messages.labels." + getConfigString(block));
         if (label != null) {
-            return label.replace("&", "�");
+            return translateColorCodes(label);
         }
         label = config.getString("Messages.labels." + getConfigStringParent(block));
         if (label != null) {
-            return label.replace("&", "�");
+            return translateColorCodes(label);
         }
         return block.getType().name() + " (" + getConfigString(block) + ")";
     }
@@ -156,11 +157,11 @@ public class ConfigStore {
     public String getLabel(ItemStack item) {
         String label = config.getString("Messages.labels." + getConfigString(item));
         if (label != null) {
-            return label.replace("&", "�");
+            return translateColorCodes(label);
         }
         label = config.getString("Messages.labels." + getConfigStringParent(item));
         if (label != null) {
-            return label.replace("&", "�");
+            return translateColorCodes(label);
         }
         return item.getType().name() + " (" + getConfigString(item) + ")";
     }
@@ -168,23 +169,27 @@ public class ConfigStore {
     public String getReason(Block block) {
         String reason = config.getString("Messages.reasons." + getConfigString(block));
         if (reason != null) {
-            return reason.replace("&", "�");
+            return translateColorCodes(reason);
         }
         reason = config.getString("Messages.reasons." + getConfigStringParent(block));
         if (reason != null) {
-            return reason.replace("&", "�");
+            return translateColorCodes(reason);
         }
         return "Ask your server administrator.";
+    }
+    
+    private String translateColorCodes(String input) {
+        return ChatColor.translateAlternateColorCodes('&', input);
     }
 
     public String getReason(ItemStack item) {
         String reason = config.getString("Messages.reasons." + getConfigString(item));
         if (reason != null) {
-            return reason.replace("&", "�");
+            return translateColorCodes(reason);
         }
         reason = config.getString("Messages.reasons." + getConfigStringParent(item));
         if (reason != null) {
-            return reason.replace("&", "�");
+            return translateColorCodes(reason);
         }
         return "Ask your server administrator.";
     }
@@ -272,10 +277,11 @@ public class ConfigStore {
                 return ownershipBans.size();
             case World:
                 return worldBans.size();
+            default:
+                // Should never reach here if all enum cases covered
+                ItemRestrict.logger.log(Level.WARNING, "Unknown ActionType detected: {0}", actionType);
+                return 0;
         }
-        // Should never reach here if all enum cases covered
-        ItemRestrict.logger.log(Level.WARNING, "Unknown ActionType detected: {0}", actionType);
-        return 0;
     }
 
     public void addBan(CommandSender sender, ActionType actionType, String configString) {
