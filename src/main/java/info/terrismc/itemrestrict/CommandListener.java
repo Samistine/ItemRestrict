@@ -11,6 +11,7 @@ public class CommandListener implements CommandExecutor {
 		this.cStore = plugin.cStore;
 	}
 
+        @Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
 		if( args.length == 0 )
 			return false;
