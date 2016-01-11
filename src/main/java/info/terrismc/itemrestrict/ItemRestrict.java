@@ -15,6 +15,7 @@ public class ItemRestrict extends JavaPlugin {
 	public ConfigStore cStore;
 	public QuickStore qStore;
 	
+        @Override
 	public void onEnable() {
 		// Initialize static objects
 		logger = getLogger();

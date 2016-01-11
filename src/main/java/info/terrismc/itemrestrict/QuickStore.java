@@ -32,6 +32,7 @@ public class QuickStore {
 		//at this point it should be ok, if it is just reading.
 		final BukkitScheduler scheduler = ItemRestrict.server.getScheduler();
 		scheduler.runTaskAsynchronously( plugin, new Runnable() {
+                        @Override
 			public void run() {
 				final int yMax = chunk.getWorld().getMaxHeight();
 				Block block;
@@ -44,6 +45,7 @@ public class QuickStore {
 								
 								// Remove block synchronously
 								scheduler.runTask( plugin , new Runnable() {
+                                                                        @Override
 									public void run() {
 										clearBlock.setType( Material.AIR );
 									}
@@ -117,6 +119,7 @@ public class QuickStore {
 		final ItemStack item = player.getItemInHand();
 		player.setItemInHand( null );
 		plugin.getServer().getScheduler().runTaskLater( plugin, new Runnable() {
+                        @Override
 			public void run() {
 				player.setItemInHand( item );
 			}
