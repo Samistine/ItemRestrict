@@ -103,8 +103,7 @@ public class EventListener implements Listener {
         event.setCancelled(true);
     }
 	
-	// Crafting Bans - Prevent crafting when detected
-	
+    // Crafting Bans - Prevent crafting when detected
     @EventHandler
     public void onItemCrafted(CraftItemEvent event) {
         // When an item is crafted
@@ -119,8 +118,7 @@ public class EventListener implements Listener {
         }
     }
 	
-	// Ownership Bans - Remove item when detected
-	
+    // Ownership Bans - Remove item when detected
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         // Perform random screening
