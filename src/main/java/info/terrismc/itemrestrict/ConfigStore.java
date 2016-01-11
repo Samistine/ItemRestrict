@@ -52,9 +52,10 @@ public class ConfigStore {
 			}
 		}
 		else {
-			if( !allowConsole )
+			if( !allowConsole ) {
 				sender.sendMessage( "This is only a player command" );
 				return false;
+                        }
 		}
 			
 		return true;
