@@ -40,7 +40,7 @@ public class EventListener implements Listener {
     // Ordered by ban type, Block/Entity/Player
     
     // Usage Bans - Prevent item usage
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent event) {
         // When a block is placed
         Player player = event.getPlayer();
@@ -55,7 +55,7 @@ public class EventListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         // When an entity damages another entity
         Entity damager = event.getDamager();
@@ -71,7 +71,7 @@ public class EventListener implements Listener {
         event.setCancelled(true);
     }
 	
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
         // When a player interacts with world
         Player player = event.getPlayer();
@@ -89,7 +89,7 @@ public class EventListener implements Listener {
         }
     }
 	
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         // When a player interacts with an entity
         Player player = event.getPlayer();
@@ -104,7 +104,7 @@ public class EventListener implements Listener {
     }
 	
     // Crafting Bans - Prevent crafting when detected
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onItemCrafted(CraftItemEvent event) {
         // When an item is crafted
         Player player = (Player) event.getWhoClicked();
@@ -119,7 +119,7 @@ public class EventListener implements Listener {
     }
 	
     // Ownership Bans - Remove item when detected
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         // Perform random screening
         if( rand.nextDouble() > cStore.getScanFrequencyOnPlayerJoin() ) return;
@@ -134,7 +134,7 @@ public class EventListener implements Listener {
         qStore.scanChunk(player.getLocation().getChunk());
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
         // When an item is clicked in the inv
         Player player = (Player) event.getWhoClicked();
@@ -177,7 +177,7 @@ public class EventListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
         // When a player pickups
         Player player = event.getPlayer();
@@ -209,14 +209,14 @@ public class EventListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onInventory(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
         // Scan inventory
         qStore.scanInventory(player);
     }
 	
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onPlayerItemHeld(final PlayerItemHeldEvent event) {
     // Don´t do this, this only causes server crashes, what happens if another plugin accesses the slot during it gets deleted ?
             //ItemRestrict.server.getScheduler().runTaskAsynchronously( plugin, new Runnable() {
@@ -244,7 +244,7 @@ public class EventListener implements Listener {
     //}
 	
     // World Bans - Remove block when detected
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onChunkLoad(ChunkLoadEvent event) {
         // Perform random screening
         if( rand.nextDouble() > cStore.getScanFrequencyOnChunkLoad() ) return;
