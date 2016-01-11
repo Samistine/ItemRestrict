@@ -46,24 +46,16 @@ public class ConfigStore {
         worldBans = config.getStringList("Bans.World");
     }
 
-    public boolean isEnabledWorld(World world) {
+    private boolean isEnabledWorld(World world) {
         return worldList.contains("All") || worldList.contains(world.getName());
     }
-	
-    public boolean isBanned(Block block, ActionType actionType) {
-        boolean banned = isBanned(getConfigString(block), actionType);
-        if (!banned) {
-            banned = isBanned(getConfigStringParent(block), actionType);
-        }
-        return banned;
+
+    private boolean isBanned(Block block, ActionType actionType) {
+        return isBanned(getConfigString(block), actionType) ? true : isBanned(getConfigStringParent(block), actionType);
     }
-	
-    public boolean isBanned(ItemStack item, ActionType actionType) {
-        boolean banned = isBanned(getConfigString(item), actionType);
-        if (!banned) {
-            banned = isBanned(getConfigStringParent(item), actionType);
-        }
-        return banned;
+
+    private boolean isBanned(ItemStack item, ActionType actionType) {
+        return isBanned(getConfigString(item), actionType) ? true : isBanned(getConfigStringParent(item), actionType);
     }
 
     private boolean isBanned(String configString, ActionType actionType) {
@@ -85,7 +77,7 @@ public class ConfigStore {
                 return false;
         }
     }
-	
+
     public boolean isBannable(Player player, ItemStack item, ActionType actionType) {
         // Check null
         if( item == null ) return false;
